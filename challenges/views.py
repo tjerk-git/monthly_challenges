@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect, Http404
 from django.urls import reverse
 from django.template.loader import render_to_string
 
@@ -16,7 +16,7 @@ monthy_challenges = {
     "september": "Eat no meat",
     "october": "Eat no meat",
     "november": "Run",
-    "december": "Run",
+    "december": None
 }
 
 
@@ -31,7 +31,7 @@ def monthy_challenge(request, month):
         challenge_text = monthy_challenges[month]
         return render(request, "challenges/challenge.html", {"text": challenge_text, "month": month})
     except:
-        return HttpResponseNotFound("<h1>whoopsy</h1>")
+        return Http404()
 
 
 def monthy_challenge_by_number(request, month):
